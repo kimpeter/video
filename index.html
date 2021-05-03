@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const url = urlParams.get('url');
+
+      console.log(url);
+
+      var video = document.getElementsByTagName('video')[0];
+      var sources = video.getElementsByTagName('source');
+      sources[0].src = url;
+      video.load();
+
+      $("#next_btn").click(function () {
+        messageHandler.postMessage("next");
+      });
+      $("#prev_btn").click(function () {
+        messageHandler.postMessage("prev");
+      });
+
+      video.onended = function () {
+        messageHandler.postMessage("next");
+      };
+    });
+
+  </script>
+</head>
+
+<body>
+  <video height="300" autoplay controls>
+    <source src="" type="video/mp4">
+  </video>
+
+  <div>
+    <button id="prev_btn">이전</button>
+    <button id="next_btn">다음</button>
+  </div>
+</body>
+
+</html>
